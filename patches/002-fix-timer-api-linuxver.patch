@@ -1,0 +1,11 @@
+--- /tmp/broadcom-orig/usr/src/broadcom-sta-6.30.223.271/src/include/linuxver.h	2025-05-16 04:46:38.000000000 +1000
++++ /usr/src/broadcom-sta-6.30.223.271/src/include/linuxver.h	2026-04-14 09:15:01.804752920 +1000
+@@ -346,7 +346,7 @@
+ }
+ #define tasklet_kill(tasklet)	{ do {} while (0); }
+ 
+-#define del_timer_sync(timer) del_timer(timer)
++#define del_timer_sync(timer) timer_delete(timer)
+ 
+ #else
+ 

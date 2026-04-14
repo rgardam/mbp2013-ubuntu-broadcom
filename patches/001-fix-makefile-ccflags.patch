@@ -1,0 +1,48 @@
+--- /tmp/broadcom-orig/usr/src/broadcom-sta-6.30.223.271/Makefile	2025-05-16 04:46:38.000000000 +1000
++++ /usr/src/broadcom-sta-6.30.223.271/Makefile	2026-04-14 09:13:59.648188756 +1000
+@@ -123,15 +123,15 @@
+ GCCVERSION := $(shell expr `echo $(GCCVERSION)` | cut -b1-3)
+ GE_49 := $(shell expr `echo $(GCCVERSION)` \>= 490)
+ 
+-EXTRA_CFLAGS :=
++ccflags-y :=
+ 
+ ifeq ($(APIFINAL),CFG80211)
+-  EXTRA_CFLAGS += -DUSE_CFG80211
++  ccflags-y += -DUSE_CFG80211
+   $(info Using CFG80211 API)
+ endif
+ 
+ ifeq ($(APIFINAL),WEXT)
+-  EXTRA_CFLAGS += -DUSE_IW
++  ccflags-y += -DUSE_IW
+   $(info Using Wireless Extension API)
+ endif
+ 
+@@ -143,12 +143,12 @@
+ wl-objs            += src/wl/sys/wl_iw.o
+ wl-objs            += src/wl/sys/wl_cfg80211_hybrid.o
+ 
+-EXTRA_CFLAGS       += -I$(src)/src/include -I$(src)/src/common/include
+-EXTRA_CFLAGS       += -I$(src)/src/wl/sys -I$(src)/src/wl/phy -I$(src)/src/wl/ppr/include
+-EXTRA_CFLAGS       += -I$(src)/src/shared/bcmwifi/include
+-#EXTRA_CFLAGS       += -DBCMDBG_ASSERT -DBCMDBG_ERR
++ccflags-y       += -I$(src)/src/include -I$(src)/src/common/include
++ccflags-y       += -I$(src)/src/wl/sys -I$(src)/src/wl/phy -I$(src)/src/wl/ppr/include
++ccflags-y       += -I$(src)/src/shared/bcmwifi/include
++#ccflags-y       += -DBCMDBG_ASSERT -DBCMDBG_ERR
+ ifeq "$(GE_49)" "1"
+-EXTRA_CFLAGS       += -Wno-date-time
++ccflags-y       += -Wno-date-time
+ endif
+ 
+ # Look for kernel architecture.
+@@ -168,7 +168,7 @@
+     endif
+ endif
+ 
+-EXTRA_LDFLAGS      := $(src)/lib/$(SHIPPED)
++ldflags-y      := $(src)/lib/$(SHIPPED)
+ 
+ KVER               ?= $(shell uname -r)
+ KBASE              ?= /lib/modules/$(KVER)

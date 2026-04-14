@@ -1,0 +1,20 @@
+--- /tmp/broadcom-orig/usr/src/broadcom-sta-6.30.223.271/src/wl/sys/wl_linux.c	2025-05-16 04:46:38.000000000 +1000
++++ /usr/src/broadcom-sta-6.30.223.271/src/wl/sys/wl_linux.c	2026-04-14 09:15:01.796896694 +1000
+@@ -2370,7 +2370,7 @@
+ ) {
+ 	wl_timer_t *t =
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 15, 0)
+-		from_timer(t, tl, timer);
++		timer_container_of(t, tl, timer);
+ #else
+ 		(wl_timer_t *)data;
+ #endif
+@@ -2475,7 +2475,7 @@
+ 	ASSERT(t);
+ 	if (t->set) {
+ 		t->set = FALSE;
+-		if (!del_timer(&t->timer)) {
++		if (!timer_delete(&t->timer)) {
+ #ifdef BCMDBG
+ 			WL_INFORM(("wl%d: Failed to delete timer %s\n", wl->unit, t->name));
+ #endif
